@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Blog</title>
+    <link rel="stylesheet" href="{% static 'my_app/styles.css'%}">
 </head>
 <body>
 <h1>My blog</h1>
 
 {% for post in page_obj %}
+    <div class="blogpost">
     <h2>{{ post.title|upper }}</h2><br>
     <p>{{ post.text }}</p>
     <p>{{ post.published }}</p>
-    ...
+    </div>
 {% endfor %}
 
 <div class="pagination">
@@ -31,14 +34,15 @@
         {% endif %}
     </span>
 </div>
-    <form method="get">
-    <select name="dropdown">
+    <form method="GET">
+    <select name="paginate_by">
         <option value="1">1</option>
         <option value="2">2</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="10">10</option>
     </select>
-    <input type="submit" value="Submit"/>
+    <input type="submit" value="Paginate"/>
     </form>
 
 </body>
