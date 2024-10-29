@@ -9,12 +9,16 @@ from django.http import request
 class IndexView(ListView):
     model = Post
     template_name = 'index.html'
+    paginate_by = 2
 
     def get_paginate_by(self, queryset):
-        if self.request.GET.get('paginate_by', self.paginate_by) is None:
-            return 2
-        else:
-            return self.request.GET.get('paginate_by', self.paginate_by)
+        paginate_by = self.request.GET.get('paginate_by', self.paginate_by)
+        return int(paginate_by) if str(paginate_by).isdigit() else self.paginate_by
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['paginate_by'] = self.get_paginate_by(self.get_queryset())
+        return context
 
 
 
